@@ -61,7 +61,6 @@ namespace TreeAlgorithm
             if (string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine("Entrada vazia.");
-                Console.ReadKey();
                 return;
             }
 
