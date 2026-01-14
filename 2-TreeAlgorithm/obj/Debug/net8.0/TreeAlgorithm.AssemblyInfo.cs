@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TreeAlgorithm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b6dfb6a61e3c824cad8493419b5cb9da9f779cb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+545653063b43ad5cfa5970cb1674a01abbb31689")]
 [assembly: System.Reflection.AssemblyProductAttribute("TreeAlgorithm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TreeAlgorithm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

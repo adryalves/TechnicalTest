@@ -49,7 +49,7 @@ namespace TreeAlgorithm
 
         /// <summary>
         /// Esse método faz a leitura do array digitado pelo usuário, faz a validação dele,
-        /// chama o método para criar a árvore e por fim, comeã a exibir na tela os dados e faz
+        /// chama o método para criar a árvore e por fim, começa a exibir na tela os dados e faz
         /// a chamada para métodos auxiliares de exibição
         /// </summary>
         static void ReadAndBuildTree()
@@ -121,6 +121,7 @@ namespace TreeAlgorithm
         /// </summary>
         static void PrintTree(TreeNode root)
         {
+
             int height = Height(root);
             int maxWidth = (int)Math.Pow(2, height) * 2;
 
@@ -133,21 +134,21 @@ namespace TreeAlgorithm
 
                 Console.Write(new string(' ', spacesBefore));
                 TreeNode[] next = new TreeNode[current.Length * 2];
-                int idx = 0;
+                int index = 0;
 
                 foreach (var node in current)
                 {
                     if (node == null)
                     {
                         Console.Write(" ");
-                        next[idx++] = null;
-                        next[idx++] = null;
+                        next[index++] = null;
+                        next[index++] = null;
                     }
                     else
                     {
                         Console.Write(node.Value);
-                        next[idx++] = node.Left;
-                        next[idx++] = node.Right;
+                        next[index++] = node.Left;
+                        next[index++] = node.Right;
                     }
                     Console.Write(new string(' ', spacesBetween));
                 }
