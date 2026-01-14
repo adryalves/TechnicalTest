@@ -8,9 +8,9 @@ namespace TreeAlgorithm
 {
     public class TreeNode
     {
-        public int Value;
-        public TreeNode? Left;
-        public TreeNode? Right;
+        public int Value { get; set; }
+        public TreeNode? Left { get; set; }
+        public TreeNode? Right { get; set; }
 
         public TreeNode(int value)
         {

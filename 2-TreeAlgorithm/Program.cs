@@ -8,9 +8,8 @@ namespace TreeAlgorithm
 {
     public class Program
     {
-
         /// <summary>
-        /// É método principal a ser executado no projeto.
+        /// É método principal a ser executado no projeto. Ele faz a chamada do Menu em Loop até que o usuário escolha parar o projeto
         /// </summary>
         static void Main()
         {
@@ -23,7 +22,6 @@ namespace TreeAlgorithm
         /// </summary>
         static bool ShowMenu()
         {
-
             Console.WriteLine("===== MENU =====");
             Console.WriteLine("1 - Digitar array e construir árvore");
             Console.WriteLine("0 - Sair");
@@ -46,7 +44,6 @@ namespace TreeAlgorithm
             ReadAndBuildTree();
             return true;
         }
-
         /// <summary>
         /// Esse método faz a leitura do array digitado pelo usuário, faz a validação dele,
         /// chama o método para criar a árvore e por fim, começa a exibir na tela os dados e faz
@@ -54,13 +51,12 @@ namespace TreeAlgorithm
         /// </summary>
         static void ReadAndBuildTree()
         {
-
             Console.WriteLine("Digite os números do array separados por espaço ou vírgula:");
             string input = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                Console.WriteLine("Entrada vazia.");
+                Console.WriteLine("Entrada vazia. Tente novamente...");
                 return;
             }
 
@@ -85,107 +81,105 @@ namespace TreeAlgorithm
             }
 
             BuildTree builder = new BuildTree();
+
             TreeNode root = builder.Build(array, 0, array.Length - 1);
 
             Console.WriteLine($"\nRaiz: {root.Value}");
 
-            Console.Write("Galhos da esquerda: ");
-            PrintLinear(root.Left);
+            List<int> leftBranch = new List<int>();
+            CollectValues(root.Left, leftBranch);
+            leftBranch.Sort((a, b) => b.CompareTo(a));
+
+            List<int> rightBranch = new List<int>();
+            CollectValues(root.Right, rightBranch);
+            rightBranch.Sort((a, b) => b.CompareTo(a));
+
+            Console.Write($"Galhos da esquerda: {(leftBranch.Count > 0 ? string.Join(", ", leftBranch) : "")}");
             Console.WriteLine();
 
-            Console.Write("Galhos da direita: ");
-            PrintLinear(root.Right);
+            Console.Write($"Galhos da direita: {(rightBranch.Count > 0 ? string.Join(", ", rightBranch) : "")}");
             Console.WriteLine();
 
             Console.WriteLine("\nÁrvore construída:");
-            PrintTree(root);
+            PrintVisualTree(root.Value, leftBranch, rightBranch);
 
             Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
             Console.ReadKey();
         }
 
         /// <summary>
-        /// Método Recursivo para exibir os valores do nó a direita ou a esquerda
-        static void PrintLinear(TreeNode node)
+        /// Método recursivo que percorre a árvore e coleta todos os valores dos nós em uma lista
+        /// </summary>
+        static void CollectValues(TreeNode node, List<int> list)
         {
             if (node == null) return;
-
-            Console.Write(node.Value + " ");
-            PrintLinear(node.Left);
-            PrintLinear(node.Right);
+            list.Add(node.Value);
+            CollectValues(node.Left, list);
+            CollectValues(node.Right, list);
         }
 
         /// <summary>
         /// Esse método busca exibir na tela a forma "figurativa" da árvore contendo os valores corretos
         /// </summary>
-        static void PrintTree(TreeNode root)
+        static void PrintVisualTree(int rootVal, List<int> leftBranch, List<int> rightBranch)
         {
+            int leftDepth = leftBranch.Count;
+            int rightDepth = rightBranch.Count;
+            int maxDepth = Math.Max(leftDepth, rightDepth);
 
-            int height = Height(root);
-            int maxWidth = (int)Math.Pow(2, height) * 2;
+            int step = 4;
+            int rootX = (leftDepth + 1) * step;
 
-            TreeNode[] current = new TreeNode[] { root };
+            Console.WriteLine(new string(' ', rootX) + rootVal);
 
-            for (int level = 1; level <= height; level++)
+            for (int i = 1; i <= maxDepth; i++)
             {
-                int spacesBetween = maxWidth / (int)Math.Pow(2, level);
-                int spacesBefore = spacesBetween / 2;
+                var sbSlash = new StringBuilder();
+                var sbVal = new StringBuilder();
 
-                Console.Write(new string(' ', spacesBefore));
-                TreeNode[] next = new TreeNode[current.Length * 2];
-                int index = 0;
+                int currentPos = 0;
 
-                foreach (var node in current)
+                if (i <= leftDepth)
                 {
-                    if (node == null)
-                    {
-                        Console.Write(" ");
-                        next[index++] = null;
-                        next[index++] = null;
-                    }
-                    else
-                    {
-                        Console.Write(node.Value);
-                        next[index++] = node.Left;
-                        next[index++] = node.Right;
-                    }
-                    Console.Write(new string(' ', spacesBetween));
+                    int slashPos = rootX - ((i - 1) * step) - 2;
+                    if (slashPos < 0) slashPos = 0;
+
+                    if (slashPos > currentPos) sbSlash.Append(new string(' ', slashPos - currentPos));
+                    sbSlash.Append("/");
+                    currentPos = slashPos + 1;
                 }
 
-                Console.WriteLine();
-
-                if (level < height)
+                if (i <= rightDepth)
                 {
-                    Console.Write(new string(' ', spacesBefore - 1));
-
-                    foreach (var node in current)
-                    {
-                        if (node == null)
-                        {
-                            Console.Write("  ");
-                        }
-                        else
-                        {
-                            Console.Write(node.Left != null ? "/" : " ");
-                            Console.Write(" ");
-                            Console.Write(node.Right != null ? "\\" : " ");
-                        }
-                        Console.Write(new string(' ', spacesBetween - 1));
-                    }
-                    Console.WriteLine();
+                    int slashPos = rootX + ((i - 1) * step) + 2;
+                    if (slashPos > currentPos) sbSlash.Append(new string(' ', slashPos - currentPos));
+                    sbSlash.Append("\\");
                 }
 
-                current = next;
+                Console.WriteLine(sbSlash.ToString());
+
+                currentPos = 0;
+                if (i <= leftDepth)
+                {
+                    int val = leftBranch[i - 1];
+                    int valPos = rootX - (i * step);
+                    if (valPos < 0) valPos = 0;
+
+                    if (valPos > currentPos) sbVal.Append(new string(' ', valPos - currentPos));
+                    sbVal.Append(val);
+                    currentPos = valPos + val.ToString().Length;
+                }
+
+                if (i <= rightDepth)
+                {
+                    int val = rightBranch[i - 1];
+                    int valPos = rootX + (i * step);
+
+                    if (valPos > currentPos) sbVal.Append(new string(' ', valPos - currentPos));
+                    sbVal.Append(val);
+                }
+                Console.WriteLine(sbVal.ToString());
             }
-        }
-
-        /// <summary>
-        /// Método também recursivo para saber o tamanho da árvore
-        /// </summary>
-        static int Height(TreeNode node)
-        {
-            if (node == null) return 0;
-            return 1 + Math.Max(Height(node.Left), Height(node.Right));
         }
     }
 }
