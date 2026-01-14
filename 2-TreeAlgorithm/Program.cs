@@ -9,11 +9,18 @@ namespace TreeAlgorithm
     public class Program
     {
 
+        /// <summary>
+        /// É método principal a ser executado no projeto.
+        /// </summary>
         static void Main()
         {
             while (ShowMenu()) { }
         }
 
+        /// <summary>
+        /// Esse método serve para descrever o menu. Ele foi criado para facilitar a chamada do menu, quando por algum
+        /// motivo, como o usuário responde algo inválido, precisar voltar as opções do menu
+        /// </summary>
         static bool ShowMenu()
         {
 
@@ -40,6 +47,11 @@ namespace TreeAlgorithm
             return true;
         }
 
+        /// <summary>
+        /// Esse método faz a leitura do array digitado pelo usuário, faz a validação dele,
+        /// chama o método para criar a árvore e por fim, comeã a exibir na tela os dados e faz
+        /// a chamada para métodos auxiliares de exibição
+        /// </summary>
         static void ReadAndBuildTree()
         {
 
@@ -93,7 +105,8 @@ namespace TreeAlgorithm
             Console.ReadKey();
         }
 
-
+        /// <summary>
+        /// Método Recursivo para exibir os valores do nó a direita ou a esquerda
         static void PrintLinear(TreeNode node)
         {
             if (node == null) return;
@@ -103,6 +116,9 @@ namespace TreeAlgorithm
             PrintLinear(node.Right);
         }
 
+        /// <summary>
+        /// Esse método busca exibir na tela a forma "figurativa" da árvore contendo os valores corretos
+        /// </summary>
         static void PrintTree(TreeNode root)
         {
             int height = Height(root);
@@ -163,6 +179,9 @@ namespace TreeAlgorithm
             }
         }
 
+        /// <summary>
+        /// Método também recursivo para saber o tamanho da árvore
+        /// </summary>
         static int Height(TreeNode node)
         {
             if (node == null) return 0;
