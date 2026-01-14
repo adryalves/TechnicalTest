@@ -41,6 +41,6 @@ cd 2-TreeAlgorithm
 ```bash
 dotnet run
 ```
-4.Pronto! Agora o Programa já exibirá um menu permitindo que você interaja com o programa e tanto insira os dados do array, quanto receba os retornos mostrandos valores da árvore como pedido na tarefa.
+4. Pronto! Agora o Programa já exibirá um menu permitindo que você interaja com o programa e tanto insira os dados do array, quanto receba os retornos mostrandos valores da árvore como pedido na tarefa.
 
 
